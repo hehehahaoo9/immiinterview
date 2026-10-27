@@ -6,7 +6,6 @@
   --card: #fffcf7;
   --accent: #1f4b63;
   --accent-soft: #e7eef2;
-  --warn: #8a4b12;
 }
 
 * {
@@ -171,13 +170,32 @@ button:disabled {
   cursor: not-allowed;
 }
 
+.hint,
+.sample {
+  border-radius: 12px;
+  padding: 14px 16px;
+  margin-bottom: 16px;
+}
+
 .hint {
   background: #f7f0e4;
   border: 1px solid #ead9b8;
-  border-radius: 12px;
-  padding: 14px 16px;
   white-space: pre-wrap;
-  margin-bottom: 16px;
+}
+
+.sample {
+  background: var(--accent-soft);
+  border: 1px solid #c5d5de;
+}
+
+.sample strong {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--accent);
+}
+
+.sample p {
+  margin: 0;
 }
 
 textarea {
@@ -190,14 +208,6 @@ textarea {
   font: inherit;
   background: #fff;
   margin-bottom: 12px;
-}
-
-.feedback {
-  border: 1px dashed var(--line);
-  border-radius: 12px;
-  padding: 14px;
-  color: var(--muted);
-  margin-bottom: 18px;
 }
 
 .nav-row {

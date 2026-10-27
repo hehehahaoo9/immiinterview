@@ -12,6 +12,7 @@ export type Question = {
   title: string;
   prompt: string;
   hint: string;
+  sampleAnswer: string;
 };
 
 export type ProgressState = {

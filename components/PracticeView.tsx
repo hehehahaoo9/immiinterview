@@ -9,7 +9,7 @@ import { loadProgress, saveAnswer } from "@/lib/storage";
 export function PracticeView({ question }: { question: Question }) {
   const [answer, setAnswer] = useState("");
   const [showHint, setShowHint] = useState(false);
-  const [feedback, setFeedback] = useState("");
+  const [showSample, setShowSample] = useState(false);
   const [saved, setSaved] = useState(false);
 
   const { prev, next } = useMemo(
@@ -21,7 +21,7 @@ export function PracticeView({ question }: { question: Question }) {
     const stored = loadProgress().answers[question.id] ?? "";
     setAnswer(stored);
     setShowHint(false);
-    setFeedback("");
+    setShowSample(false);
     setSaved(false);
   }, [question.id]);
 
@@ -29,12 +29,6 @@ export function PracticeView({ question }: { question: Question }) {
     setAnswer(value);
     saveAnswer(question.id, value);
     setSaved(true);
-  }
-
-  function requestFeedback() {
-    setFeedback(
-      "AI 反饋尚未接上 API。之後會根據你的答案，就結構、部門意識與表達清晰度給予建議。",
-    );
   }
 
   return (
@@ -50,12 +44,22 @@ export function PracticeView({ question }: { question: Question }) {
         >
           {showHint ? "隱藏提示" : "顯示提示"}
         </button>
-        <button type="button" onClick={requestFeedback} disabled={!answer.trim()}>
-          AI 反饋
+        <button
+          type="button"
+          className="secondary"
+          onClick={() => setShowSample((value) => !value)}
+        >
+          {showSample ? "隱藏完整答案" : "顯示完整答案"}
         </button>
       </div>
 
       {showHint ? <div className="hint">{question.hint}</div> : null}
+      {showSample ? (
+        <div className="sample">
+          <strong>參考答案</strong>
+          <p>{question.sampleAnswer}</p>
+        </div>
+      ) : null}
 
       <textarea
         value={answer}
@@ -63,8 +67,6 @@ export function PracticeView({ question }: { question: Question }) {
         placeholder="在此輸入你的答題要點或完整答案。"
       />
       {saved ? <p className="meta">已儲存至本機瀏覽器。</p> : null}
-
-      {feedback ? <div className="feedback">{feedback}</div> : null}
 
       <div className="nav-row">
         {prev ? (
