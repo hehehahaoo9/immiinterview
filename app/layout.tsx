@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { ServiceWorkerRegister } from "@/components/ServiceWorkerRegister";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -15,4 +16,29 @@ export const metadata: Metadata = {
     telephone: false,
   },
   themeColor: "#1f4b63",
+  icons: {
+    icon: [
+      { url: "/icon/icon-192.png", sizes: "192x192", type: "image/png" },
+      { url: "/icon/icon-512.png", sizes: "512x512", type: "image/png" },
+    ],
+    apple: [
+      { url: "/icon/icon-192.png", sizes: "192x192", type: "image/png" },
+    ],
+  },
 };
+
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  return (
+    <html lang="zh-Hant">
+      <body>
+        <div className="shell">{children}</div>
+        <SpeedInsights />
+        <ServiceWorkerRegister />
+      </body>
+    </html>
+  );
+}
